@@ -138,6 +138,8 @@ xcopy /Y "C:\Users\greys\Desktop\Birds\SDL2\SDL2_ttf-2.0.14\lib\x86\*.dll" "$(Ou
     <ClCompile Include="BirdsSDL.cpp" />
     <ClCompile Include="cBird.cpp" />
     <ClCompile Include="cBkGround.cpp" />
+    <ClCompile Include="cButton.cpp" />
+    <ClCompile Include="cButtonMgr.cpp" />
     <ClCompile Include="cFont.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cMainGame.cpp" />
@@ -153,6 +155,8 @@ xcopy /Y "C:\Users\greys\Desktop\Birds\SDL2\SDL2_ttf-2.0.14\lib\x86\*.dll" "$(Ou
     <ClInclude Include="birdGame.h" />
     <ClInclude Include="cBird.h" />
     <ClInclude Include="cBkGround.h" />
+    <ClInclude Include="cButton.h" />
+    <ClInclude Include="cButtonMgr.h" />
     <ClInclude Include="cFont.h" />
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="cMainGame.h" />

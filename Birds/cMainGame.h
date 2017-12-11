@@ -39,6 +39,7 @@ private:
 	time_point< high_resolution_clock > m_lastTime;
 	time_point< high_resolution_clock > m_CurrentTime;
 	duration< double > deltaTime;
+	bool loop;
 
 	// Sprites for displaying background and rocket textures
 	cSprite spriteBkgd;
@@ -68,6 +69,27 @@ private:
 	int renderWidth, renderHeight;
 	int theScore;
 	string scoreText;
+	string scoreAsString;
+	LPCSTR score;
+	bool scoreUp;
+	bool gamePlaying;
+	int birdcount;
+	bool fileAvailable;
+
+	// Create vector array of button textures
+	vector<LPCSTR> btnNameList;
+	vector<LPCSTR> btnTexturesToUse;
+	vector<SDL_Point> btnPos;
+	vector<cButton> theButtons;
+
+	gameState theGameState;
+	//btnTypes theBtnType;
+	SDL_Rect pos;
+	FPoint scale;
+	SDL_Rect aRect;
+	SDL_Color aColour;
+	cTexture* tempTextTexture;
+	SDL_Point theAreaClicked;
 };
 
 #endif

@@ -15,7 +15,6 @@ cBird::cBird() : cSprite()
 {
 	this->birdVelocity = { 0, 0 };
 }
-
 /*
 =================================================================
 Update the sprite position
@@ -29,19 +28,8 @@ void cBird::update(double deltaTime)
 	currentSpritePos.y += this->getSpriteTranslation().y * deltaTime * birdVelocity.y;
 
 	this->setSpritePos({ currentSpritePos.x, currentSpritePos.y });
-	cout << "Bird position - x: " << this->getSpritePos().x << " y: " << this->getSpritePos().y << " deltaTime: " << deltaTime << endl;
+	//cout << "Bird position - x: " << this->getSpritePos().x << " y: " << this->getSpritePos().y << " deltaTime: " << deltaTime << endl;
 	this->setBoundingRect(this->getSpritePos());
-
-	//Bird Boundaries for the left and right
-	if (currentSpritePos.x > 1000 - 65 | currentSpritePos.x < -25)
-	{
-		birdVelocity.x = birdVelocity.x * -1;
-	}
-
-	if (currentSpritePos.y > 725)
-	{
-		this->setActive(false);
-	}
 
 }
 
@@ -64,3 +52,4 @@ SDL_Point cBird::getBirdVelocity()
 {
 	return birdVelocity;
 }
+

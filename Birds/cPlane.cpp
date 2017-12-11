@@ -51,9 +51,9 @@ void cPlane::update(double deltaTime)
 Sets the velocity for the plane
 =================================================================
 */
-void cPlane::setPlaneVelocity(SDL_Point rocketVel)
+void cPlane::setPlaneVelocity(SDL_Point planeVel)
 {
-	planeVelocity = rocketVel;
+	planeVelocity = planeVel;
 }
 /*
 =================================================================
