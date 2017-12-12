@@ -69,3 +69,4 @@ void cSound::play(int loop)
 			break;
 	}
 }
+

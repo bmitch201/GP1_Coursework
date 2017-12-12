@@ -54,6 +54,12 @@
     <ClCompile Include="BirdsSDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cButtonMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cBird.h">
@@ -96,6 +102,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cPlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cButtonMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

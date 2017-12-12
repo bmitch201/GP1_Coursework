@@ -1,5 +1,5 @@
-#ifndef _GAME_H
-#define _GAME_H
+#ifndef _MAINGAME_H
+#define _MAINGAME_H
 
 /*
 ==================================================================================
@@ -12,13 +12,12 @@ cGame.h
 // Game specific includes
 #include "birdGame.h"
 
-
 using namespace std;
 
-class cGame
+class cMainGame
 {
 public:
-	cGame();
+	cMainGame();
 
 	void initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer);
 	void run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer);
@@ -30,15 +29,16 @@ public:
 	bool getInput(bool theLoop);
 	double getElapsedSeconds();
 
-	static cGame* getInstance();
+	static cMainGame* getInstance();
 
 private:
 
-	static cGame* pInstance;
+	static cMainGame* pInstance;
 	// for framerates
 	time_point< high_resolution_clock > m_lastTime;
 	time_point< high_resolution_clock > m_CurrentTime;
 	duration< double > deltaTime;
+	bool loop;
 
 	// Sprites for displaying background and rocket textures
 	cSprite spriteBkgd;
@@ -50,6 +50,10 @@ private:
 	vector<LPCSTR> textName;
 	vector<LPCSTR> texturesToUse;
 	vector<cBird*> theBirds;
+	
+	//Saving Score
+	//cFile theFile;
+	vector<int> highScore;
 
 	// Fonts to use
 	vector<LPCSTR> fontList;
@@ -68,6 +72,29 @@ private:
 	int renderWidth, renderHeight;
 	int theScore;
 	string scoreText;
+	string scoreAsString;
+	string highscoreAsString;
+	LPCSTR score;
+	LPCSTR hscore;
+	bool scoreUp;
+	bool gamePlaying;
+	int birdcount;
+	bool fileAvailable;
+
+	// Create vector array of button textures
+	vector<LPCSTR> btnNameList;
+	vector<LPCSTR> btnTexturesToUse;
+	vector<SDL_Point> btnPos;
+	vector<cButton> theButtons;
+
+	gameState theGameState;
+	//btnTypes theBtnType;
+	SDL_Rect pos;
+	FPoint scale;
+	SDL_Rect aRect;
+	SDL_Color aColour;
+	cTexture* tempTextTexture;
+	SDL_Point theAreaClicked;
 };
 
 #endif

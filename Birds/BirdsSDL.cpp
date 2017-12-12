@@ -13,7 +13,7 @@ using namespace std;
 static cSDL2WNDManager* pgmWNDMgr = cSDL2WNDManager::getInstance();
 
 //This is the our Game
-static cGame* theGame = cGame::getInstance();
+static cMainGame* theGame = cMainGame::getInstance();
 
 int main(int argc, char *argv[])
 {
