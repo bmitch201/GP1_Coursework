@@ -26,6 +26,7 @@ public:
 	void render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer, double rotAngle, SDL_Point* spriteCentre);
 	void update();
 	void update(double deltaTime);
+	void scorekeeping();
 	bool getInput(bool theLoop);
 	double getElapsedSeconds();
 
@@ -52,8 +53,11 @@ private:
 	vector<cBird*> theBirds;
 	
 	//Saving Score
-	//cFile theFile;
 	vector<int> highScore;
+	int hScore;
+	vector<LPCSTR> highScoreText;
+	vector<string> highScr;
+	bool hSup = false;
 
 	// Fonts to use
 	vector<LPCSTR> fontList;

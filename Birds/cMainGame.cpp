@@ -129,7 +129,16 @@ void cMainGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	birdcount = 0;
 
-	highScore = { 0,0,0,0,0,0 };
+	highScore = { 0, 0, 0, 0, 0 };
+	highScoreText = { "0", "0", "0", "0", "0", "Highscore"};
+	highScr = { "", "", "", "", "", "" };
+
+	theTextureMgr->addTexture("1", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[0], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("2", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[1], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("3", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[2], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("4", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[3], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("5", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[4], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("HS", theFontMgr->getFont("fipps")->createTextTexture(theRenderer, highScoreText[5], SOLID, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }));
 
 }
 
@@ -257,6 +266,21 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	{
 		spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 
+		if (hSup)
+		{	
+			theTextureMgr->deleteTexture("1");
+			theTextureMgr->deleteTexture("2");
+			theTextureMgr->deleteTexture("3");
+			theTextureMgr->deleteTexture("4");
+			theTextureMgr->deleteTexture("5");
+			theTextureMgr->addTexture("1", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[0], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+			theTextureMgr->addTexture("2", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[1], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+			theTextureMgr->addTexture("3", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[2], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+			theTextureMgr->addTexture("4", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[3], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+			theTextureMgr->addTexture("5", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[4], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+			hSup = false;
+		}
+
 		// Render the Title
 		tempTextTexture = theTextureMgr->getTexture("GameOver");
 		pos = { 400, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
@@ -264,7 +288,37 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
 		tempTextTexture = theTextureMgr->getTexture("Score:");
-		pos = { 400, 300, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		pos = { 400, 100, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+		
+		tempTextTexture = theTextureMgr->getTexture("HS");
+		pos = { 200, 125, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+
+		tempTextTexture = theTextureMgr->getTexture("5");
+		pos = { 200, 225, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+
+		tempTextTexture = theTextureMgr->getTexture("4");
+		pos = { 200, 300, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+
+		tempTextTexture = theTextureMgr->getTexture("3");
+		pos = { 200, 375, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+		
+		tempTextTexture = theTextureMgr->getTexture("2");
+		pos = { 200, 450, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		scale = { 1, 1 };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+
+		tempTextTexture = theTextureMgr->getTexture("1");
+		pos = { 200, 525, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		scale = { 1, 1 };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
@@ -418,21 +472,7 @@ void cMainGame::update(double deltaTime)
 				theSoundMgr->getSnd("explosion")->play(0);
 				thePlane.setSpritePos({ 500, 900 });
 
-				for (int count = 4; count >= 0; count--)
-				{
-					if (theScore > highScore[count])
-					{
-						highScore[count] = theScore;
-						break;
-					}
-					
-				}
-
-				cout << highScore[0];
-				cout << highScore[1];
-				cout << highScore[2];
-				cout << highScore[3];
-				cout << highScore[4];
+				scorekeeping();
 
 				theGameState = GAMEOVER;
 				theSoundMgr->getSnd("over")->play(3);
@@ -458,6 +498,7 @@ void cMainGame::update(double deltaTime)
 	case GAMEOVER:
 	{
 		gamePlaying = false;
+
 		theGameState = theButtonMgr->getBtn("exit_btn")->update(theGameState, QUIT, theAreaClicked);
 		theGameState = theButtonMgr->getBtn("retry_btn")->update(theGameState, RETRY, theAreaClicked);
 		theAreaClicked = { 0, 0 };
@@ -498,6 +539,35 @@ void cMainGame::update(double deltaTime)
 		default:
 	break;
 	}
+}
+
+void cMainGame::scorekeeping()
+{
+
+	for (int c = 4; c >= 0; c--)
+	{
+		if (theScore > highScore[c])
+		{
+			highScore[c] = theScore;
+			hSup = true;
+			highScr[c] = std::to_string(highScore[c]);
+			highScoreText[c] = highScr[c].c_str();
+			break;
+		}
+	}
+
+	/*cout << highScore[0];
+	cout << highScore[1];
+	cout << highScore[2];
+	cout << highScore[3];
+	cout << highScore[4];
+	cout << endl;
+	cout << highScoreText[0];
+	cout << highScoreText[1];
+	cout << highScoreText[2];
+	cout << highScoreText[3];
+	cout << highScoreText[4];
+	cout << endl;*/
 }
 
 bool cMainGame::getInput(bool theLoop)
@@ -563,19 +633,7 @@ bool cMainGame::getInput(bool theLoop)
 				{
 					theGameState = END;
 
-					for (int count = 4; count >= 0; count--)
-					{
-						if (theScore > highScore[count])
-						{
-							highScore[count] = theScore;
-							break;
-						}
-					}
-					cout << highScore[0];
-					cout << highScore[1];
-					cout << highScore[2];
-					cout << highScore[3];
-					cout << highScore[4];
+					scorekeeping();
 				}
 				break;
 
