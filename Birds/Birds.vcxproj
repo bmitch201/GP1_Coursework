@@ -169,6 +169,9 @@ xcopy /Y "C:\Users\greys\Desktop\Birds\SDL2\SDL2_ttf-2.0.14\lib\x86\*.dll" "$(Ou
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="GameConstants.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

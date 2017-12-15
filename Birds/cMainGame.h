@@ -54,7 +54,6 @@ private:
 	
 	//Saving Score
 	vector<int> highScore;
-	int hScore;
 	vector<LPCSTR> highScoreText;
 	vector<string> highScr;
 	bool hSup = false;
@@ -83,7 +82,6 @@ private:
 	bool scoreUp;
 	bool gamePlaying;
 	int birdcount;
-	bool fileAvailable;
 
 	// Create vector array of button textures
 	vector<LPCSTR> btnNameList;
