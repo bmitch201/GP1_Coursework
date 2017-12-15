@@ -40,6 +40,7 @@ cMainGame* cMainGame::getInstance()
 
 void cMainGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
+	//Sets the variable to indicate the game is not playing
 	gamePlaying = false;
 	
 	// Get width and height of render context
@@ -53,7 +54,8 @@ void cMainGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theTextureMgr->setRenderer(theRenderer);
 	theFontMgr->initFontLib();
 	theSoundMgr->initMixer();
-
+	
+	//Sets the score to 0
 	theScore = 0;
 
 	//Store button textures
@@ -104,6 +106,17 @@ void cMainGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theTextureMgr->addTexture("Instructions2", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, gameTextList[4], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
 	theTextureMgr->addTexture("Instructions3", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, gameTextList[5], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
 
+	highScore = { 0, 0, 0, 0, 0 };
+	highScoreText = { "0", "0", "0", "0", "0", "Highscore" };
+	highScr = { "", "", "", "", "", "" };
+
+	theTextureMgr->addTexture("1", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[0], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("2", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[1], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("3", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[2], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("4", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[3], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("5", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[4], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("HS", theFontMgr->getFont("fipps")->createTextTexture(theRenderer, highScoreText[5], SOLID, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }));
+
 	// Load game sounds
 	soundList = { "theme", "over", "explosion", "point" };
 	soundTypes = { MUSIC, SFX, SFX, SFX };
@@ -127,18 +140,8 @@ void cMainGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	thePlane.setSpriteDimensions(theTextureMgr->getTexture("thePlane")->getTWidth(), theTextureMgr->getTexture("thePlane")->getTHeight());
 	thePlane.setPlaneVelocity({ 0, 0 });
 
+	//Sets the amount of birds to 0
 	birdcount = 0;
-
-	highScore = { 0, 0, 0, 0, 0 };
-	highScoreText = { "0", "0", "0", "0", "0", "Highscore"};
-	highScr = { "", "", "", "", "", "" };
-
-	theTextureMgr->addTexture("1", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[0], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
-	theTextureMgr->addTexture("2", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[1], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
-	theTextureMgr->addTexture("3", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[2], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
-	theTextureMgr->addTexture("4", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[3], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
-	theTextureMgr->addTexture("5", theFontMgr->getFont("pressStart2P")->createTextTexture(theRenderer, highScoreText[4], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
-	theTextureMgr->addTexture("HS", theFontMgr->getFont("fipps")->createTextTexture(theRenderer, highScoreText[5], SOLID, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }));
 
 }
 
@@ -159,13 +162,16 @@ void cMainGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
+	//Clear the renderer
 	SDL_RenderClear(theRenderer);
+
+	//Render the background
+	spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 	
 	switch (theGameState)
 	{
 		case MENU:
 		{
-			spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 		
 			// Render the Title
 			tempTextTexture = theTextureMgr->getTexture("Title");
@@ -187,7 +193,6 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	case RULES:
 		{
-			spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 
 			// Render the Title
 			tempTextTexture = theTextureMgr->getTexture("Title");
@@ -223,8 +228,6 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	case PLAYING:
 		{
 		scoreUp = true;
-		
-		spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 
 			// Render each bird in the vector array
 			for (int draw = 0; draw < theBirds.size(); draw++)
@@ -264,8 +267,8 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	case GAMEOVER:
 	{
-		spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
 
+		//When the high score changes this is run
 		if (hSup)
 		{	
 			theTextureMgr->deleteTexture("1");
@@ -287,6 +290,7 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		scale = { 2, 2 };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
+		// Render the Score and High Scores
 		tempTextTexture = theTextureMgr->getTexture("Score:");
 		pos = { 400, 100, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		scale = { 1, 1 };
@@ -322,6 +326,7 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		scale = { 1, 1 };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
+		// Render the buttons
 		theButtonMgr->getBtn("retry_btn")->setSpritePos({ 480, 615 });
 		theButtonMgr->getBtn("retry_btn")->render(theRenderer, &theButtonMgr->getBtn("retry_btn")->getSpriteDimensions(), &theButtonMgr->getBtn("retry_btn")->getSpritePos(), theButtonMgr->getBtn("exit_btn")->getSpriteScale());
 
@@ -331,8 +336,7 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	break;
 
 	case END:
-	{	
-		spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
+	{
 
 		// Render the Title
 		tempTextTexture = theTextureMgr->getTexture("Title");
@@ -340,7 +344,7 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		scale = { 1, 1 };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
-		// Render Button
+		// Render Buttons
 		theButtonMgr->getBtn("menu_btn")->setSpritePos({ 480, 300 });
 		theButtonMgr->getBtn("menu_btn")->render(theRenderer, &theButtonMgr->getBtn("menu_btn")->getSpriteDimensions(), &theButtonMgr->getBtn("menu_btn")->getSpritePos(), theButtonMgr->getBtn("menu_btn")->getSpriteScale());
 		
@@ -354,6 +358,7 @@ void cMainGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	
 	case QUIT:
 	{
+		//Ends the game
 		loop = false;
 	}
 	break;
@@ -375,12 +380,12 @@ void cMainGame::update()
 
 void cMainGame::update(double deltaTime)
 {
-	// Check Button clicked and change state
 	switch (theGameState)
 	{
 	
 	case MENU:
 		{
+			// Check Button clicked and change state
 			theGameState = theButtonMgr->getBtn("exit_btn")->update(theGameState, QUIT, theAreaClicked);
 			theGameState = theButtonMgr->getBtn("rules_btn")->update(theGameState, RULES, theAreaClicked);
 			theGameState = theButtonMgr->getBtn("start_btn")->update(theGameState, PLAYING, theAreaClicked);
@@ -390,6 +395,7 @@ void cMainGame::update(double deltaTime)
 
 	case RULES:
 	{
+		// Check Button clicked and change state
 		theGameState = theButtonMgr->getBtn("menu_btn")->update(theGameState, MENU, theAreaClicked);
 		theAreaClicked = { 0, 0 };
 	}
@@ -397,8 +403,10 @@ void cMainGame::update(double deltaTime)
 
 	case PLAYING:
 	{
+		//Set the game playing to true
 		gamePlaying = true;
 
+		//If there are less than 6 birds then spawn more
 		if (birdcount < 6)
 		{
 			theBirds.push_back(new cBird);
@@ -486,7 +494,10 @@ void cMainGame::update(double deltaTime)
 
 	case END:
 	{
+		//Set the game playing to false
 		gamePlaying = false;
+		
+		// Check Button clicked and change state
 		theGameState = theButtonMgr->getBtn("exit_btn")->update(theGameState, QUIT, theAreaClicked);
 		theGameState = theButtonMgr->getBtn("menu_btn")->update(theGameState, RESTART, theAreaClicked);
 		theGameState = theButtonMgr->getBtn("resume_btn")->update(theGameState, PLAYING, theAreaClicked);
@@ -497,8 +508,10 @@ void cMainGame::update(double deltaTime)
 
 	case GAMEOVER:
 	{
+		//Set the game playing to false
 		gamePlaying = false;
 
+		// Check Button clicked and change state
 		theGameState = theButtonMgr->getBtn("exit_btn")->update(theGameState, QUIT, theAreaClicked);
 		theGameState = theButtonMgr->getBtn("retry_btn")->update(theGameState, RETRY, theAreaClicked);
 		theAreaClicked = { 0, 0 };
@@ -508,26 +521,44 @@ void cMainGame::update(double deltaTime)
 
 	case RETRY:
 	{
+		//Move the plane on screen
 		thePlane.setSpritePos({ 500, 550 });
+		
+		//Clear theBirds array
 		theBirds.clear();
+		
+		//Set the bird count to 0
 		birdcount = 0;
+		
+		//Reset the score
 		theScore = 0;
 		scoreAsString = "Score:" + std::to_string(theScore);
 		score = scoreAsString.c_str();
 		gameTextList[1] = score;
+		
+		//Change the game state
 		theGameState = PLAYING;
 	}
 	break;
 
 	case RESTART:
 	{
+		//Move the plane on screen
 		thePlane.setSpritePos({ 500, 550 });
+		
+		//Clear theBirds array
 		theBirds.clear();
+		
+		//Set the bird count to 0
 		birdcount = 0;
+		
+		//Reset the score
 		theScore = 0;
 		scoreAsString = "Score:" + std::to_string(theScore);
 		score = scoreAsString.c_str();
 		gameTextList[1] = score;
+		
+		//Change the game state
 		theGameState = MENU;
 	}
 	break;
@@ -543,7 +574,7 @@ void cMainGame::update(double deltaTime)
 
 void cMainGame::scorekeeping()
 {
-
+	//For each of the Highscore elements, check if the score is greater than current high score. If so replace the element.
 	for (int c = 4; c >= 0; c--)
 	{
 		if (theScore > highScore[c])
@@ -578,6 +609,7 @@ bool cMainGame::getInput(bool theLoop)
 	{
 		if (event.type == SDL_QUIT)
 		{
+			//Ends the game
 			theLoop = false;
 		}
 
@@ -589,6 +621,7 @@ bool cMainGame::getInput(bool theLoop)
 			{
 			case SDL_BUTTON_LEFT:
 			{
+				//Checks where the player has clicked the mouse and sets that as theAreaClicked 
 				theAreaClicked = { event.motion.x, event.motion.y };
 			}
 			break;
@@ -602,12 +635,14 @@ bool cMainGame::getInput(bool theLoop)
 
 			case SDLK_LEFT:
 			{
+				//Stops the plane
 				thePlane.setSpriteTranslation({ 0, 0 });
 			}
 			break;
 
 			case SDLK_RIGHT:
 			{
+				//Stops the plane
 				thePlane.setSpriteTranslation({ 0, 0 });
 			}
 			break;
@@ -625,26 +660,31 @@ bool cMainGame::getInput(bool theLoop)
 
 				case MENU:
 				{
+					//Ends the game
 					theLoop = false;
 				}
 				break;
 
 				case PLAYING:
 				{
+					//Chnages the game State
 					theGameState = END;
 
+					//Updates the high score
 					scorekeeping();
 				}
 				break;
 
 				case GAMEOVER:
 				{
+					//Ends the game
 					theLoop = false;
 				}
 				break;
 
 				case END:
 				{
+					//Ends the game
 					theLoop = false;
 				}
 				break;
@@ -656,7 +696,7 @@ bool cMainGame::getInput(bool theLoop)
 
 			case SDLK_LEFT:
 			{
-
+				//Checks if the game is currently playing and is within the boudaries and then moves the plane left
 				if (gamePlaying && thePlane.getSpritePos().x <= (renderWidth - thePlane.getSpritePos().w))
 				{
 					thePlane.setSpriteTranslation({ -10, -10 });
@@ -666,6 +706,7 @@ bool cMainGame::getInput(bool theLoop)
 
 			case SDLK_RIGHT:
 			{
+				//Checks if the game is currently playing and is within the boudaries and then moves the plane right
 				if (gamePlaying && thePlane.getSpritePos().x >= 0)
 				{
 					thePlane.setSpriteTranslation({ 10, 10 });
